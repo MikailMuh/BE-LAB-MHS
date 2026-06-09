@@ -7,6 +7,8 @@ const db = require('../config/db');
 const { verifyToken } = require('../middleware/auth');
 require('dotenv').config();
 
+// console.log('CALLBACK URL:', process.env.GOOGLE_CALLBACK_URL);
+
 function generateToken(user){
   return jwt.sign(
     {id: user.id, role: user.role, email: user.email},
