@@ -108,6 +108,22 @@ router.get(
     session: false,
   }),
 );
+// router.get(
+//   "/google/callback",
+//   passport.authenticate("google", {
+//     session: false,
+//     failureRedirect: "/api/auth/oauth-failed",
+//   }),
+//   (req, res) => {
+//     const token = generateToken(req.user);
+
+//     res.json({
+//       msg: "Google OAuth login successful",
+//       data: { user_id: req.user.id, token },
+//     });
+//   },
+// );
+
 router.get(
   "/google/callback",
   passport.authenticate("google", {
@@ -116,7 +132,17 @@ router.get(
   }),
   (req, res) => {
     const token = generateToken(req.user);
-    res.redirect(`genshinimport://auth?token=${token}`);
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <script>
+            window.location.replace('genshinimport://auth?token=${token}');
+          </script>
+          <p>Redirecting back to app...</p>
+        </body>
+      </html>
+    `);
   },
 );
 
